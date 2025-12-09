@@ -6,5 +6,5 @@ uses
   SysUtils;
 
 begin
-  WriteLn(''TODO: criar testes unitarios para os controllers e models quando o container Fano estiver configurado.'');
+  WriteLn('TODO: criar testes unitarios para os controllers e models quando o container Fano estiver configurado.');
 end.

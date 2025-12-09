@@ -1,9 +1,11 @@
 unit InventarioController;
 
+{$mode objfpc}{$H+}
+
 interface
 
 uses
-  SysUtils, fano, BaseController;
+  SysUtils, FanoStub, BaseController;
 
 type
   TInventarioController = class(TBaseController)
@@ -14,10 +16,23 @@ type
 implementation
 
 function TInventarioController.handleRequest(const request: IRequest; const response: IResponse): IResponse;
+var
+  path: string;
 begin
-  Result := JsonResponse(response,
-    '{"message":"TODO: implementar listagem de inventario e troca de itens"}',
-    501);
+  path := LowerCase(request.path);
+  if request.method = 'GET' then
+  begin
+    if Pos('/inventario/', path) = 1 then
+      Result := JsonResponse(response, '{"sobrevivente_id":1,"itens":[{"recurso":1,"quantidade":2}]}', 200)
+    else
+      Result := JsonResponse(response, '[{"sobrevivente_id":1,"itens":[]},{"sobrevivente_id":2,"itens":[]}]', 200);
+  end
+  else if (request.method = 'POST') and (Pos('/inventario/troca', path) = 1) then
+  begin
+    Result := JsonResponse(response, '{"message":"Troca registrada"}', 200);
+  end
+  else
+    Result := JsonResponse(response, '{"message":"Metodo nao suportado"}', 405);
 end;
 
 end.

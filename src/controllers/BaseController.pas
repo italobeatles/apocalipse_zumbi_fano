@@ -1,9 +1,11 @@
 unit BaseController;
 
+{$mode objfpc}{$H+}
+
 interface
 
 uses
-  SysUtils, fano;
+  SysUtils, FanoStub;
 
 type
   TBaseController = class(TInterfacedObject, IRequestHandler)

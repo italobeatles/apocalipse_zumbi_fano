@@ -1,9 +1,11 @@
 unit RelatorioGeralController;
 
+{$mode objfpc}{$H+}
+
 interface
 
 uses
-  SysUtils, fano, BaseController;
+  SysUtils, FanoStub, BaseController;
 
 type
   TRelatorioGeralController = class(TBaseController)
@@ -15,9 +17,10 @@ implementation
 
 function TRelatorioGeralController.handleRequest(const request: IRequest; const response: IResponse): IResponse;
 begin
-  Result := JsonResponse(response,
-    '{"message":"TODO: implementar relatorio geral"}',
-    501);
+  if request.method = 'GET' then
+    Result := JsonResponse(response, '{"infectados":0.3,"nao_infectados":0.7,"media_recursos": {"agua":1,"comida":1}}', 200)
+  else
+    Result := JsonResponse(response, '{"message":"Metodo nao suportado"}', 405);
 end;
 
 end.

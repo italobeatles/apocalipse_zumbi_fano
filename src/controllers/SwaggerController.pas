@@ -1,9 +1,11 @@
 unit SwaggerController;
 
+{$mode objfpc}{$H+}
+
 interface
 
 uses
-  SysUtils, Classes, fano, BaseController;
+  SysUtils, Classes, FanoStub, BaseController;
 
 type
   TSwaggerController = class(TBaseController)

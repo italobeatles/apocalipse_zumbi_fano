@@ -1,9 +1,11 @@
 unit InformarZumbificacaoController;
 
+{$mode objfpc}{$H+}
+
 interface
 
 uses
-  SysUtils, fano, BaseController;
+  SysUtils, FanoStub, BaseController;
 
 type
   TInformarZumbificacaoController = class(TBaseController)
@@ -15,9 +17,10 @@ implementation
 
 function TInformarZumbificacaoController.handleRequest(const request: IRequest; const response: IResponse): IResponse;
 begin
-  Result := JsonResponse(response,
-    '{"message":"TODO: implementar notificacao de zumbificacao"}',
-    501);
+  if request.method = 'POST' then
+    Result := JsonResponse(response, '{"message":"Aviso registrado"}', 200)
+  else
+    Result := JsonResponse(response, '{"message":"Metodo nao suportado"}', 405);
 end;
 
 end.

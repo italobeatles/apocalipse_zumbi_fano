@@ -1,0 +1,16 @@
+{
+  "routes": [
+    {"method": "GET", "path": "/", "handler": "SwaggerController"},
+    {"method": "GET", "path": "/swagger", "handler": "SwaggerController"},
+    {"method": "GET", "path": "/sobreviventes", "handler": "SobreviventesController"},
+    {"method": "POST", "path": "/sobreviventes", "handler": "SobreviventesController"},
+    {"method": "GET", "path": "/sobreviventes/:id", "handler": "SobreviventesController"},
+    {"method": "PUT", "path": "/sobreviventes/:id", "handler": "SobreviventesController"},
+    {"method": "DELETE", "path": "/sobreviventes/:id", "handler": "SobreviventesController"},
+    {"method": "GET", "path": "/inventario", "handler": "InventarioController"},
+    {"method": "GET", "path": "/inventario/:id", "handler": "InventarioController"},
+    {"method": "POST", "path": "/inventario/troca", "handler": "InventarioController"},
+    {"method": "POST", "path": "/informar-zumbificacao", "handler": "InformarZumbificacaoController"},
+    {"method": "GET", "path": "/relatorio-geral", "handler": "RelatorioGeralController"}
+  ]
+}

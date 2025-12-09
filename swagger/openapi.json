@@ -1,0 +1,180 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API REST - Apocalipse Zumbi (Fano Framework)",
+    "version": "1.0.0",
+    "description": "API para gerenciar sobreviventes, inventario e relatorios do apocalipse zumbi. Endpoints espelham a implementacao Laravel."
+  },
+  "servers": [
+    {"url": "/"}
+  ],
+  "paths": {
+    "/sobreviventes": {
+      "get": {
+        "summary": "Listar sobreviventes",
+        "responses": {
+          "200": {"description": "Lista de sobreviventes"}
+        }
+      },
+      "post": {
+        "summary": "Cadastrar sobrevivente",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "#/components/schemas/SobreviventeInput"}
+            }
+          }
+        },
+        "responses": {
+          "201": {"description": "Sobrevivente criado"}
+        }
+      }
+    },
+    "/sobreviventes/{id}": {
+      "get": {
+        "summary": "Detalhar sobrevivente",
+        "parameters": [
+          {"name": "id", "in": "path", "required": true, "schema": {"type": "integer"}}
+        ],
+        "responses": {
+          "200": {"description": "Dados do sobrevivente"},
+          "404": {"description": "Nao encontrado"}
+        }
+      },
+      "put": {
+        "summary": "Atualizar localizacao",
+        "parameters": [
+          {"name": "id", "in": "path", "required": true, "schema": {"type": "integer"}}
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {"schema": {"$ref": "#/components/schemas/LocalizacaoInput"}}
+          }
+        },
+        "responses": {
+          "200": {"description": "Localizacao atualizada"}
+        }
+      },
+      "delete": {
+        "summary": "Excluir sobrevivente",
+        "parameters": [
+          {"name": "id", "in": "path", "required": true, "schema": {"type": "integer"}}
+        ],
+        "responses": {
+          "204": {"description": "Removido"}
+        }
+      }
+    },
+    "/inventario": {
+      "get": {
+        "summary": "Listar inventario dos sobreviventes",
+        "responses": {
+          "200": {"description": "Inventario"}
+        }
+      }
+    },
+    "/inventario/{id}": {
+      "get": {
+        "summary": "Inventario de um sobrevivente",
+        "parameters": [
+          {"name": "id", "in": "path", "required": true, "schema": {"type": "integer"}}
+        ],
+        "responses": {
+          "200": {"description": "Inventario do sobrevivente"},
+          "404": {"description": "Nao encontrado"}
+        }
+      }
+    },
+    "/inventario/troca": {
+      "post": {
+        "summary": "Troca de itens entre sobreviventes",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {"schema": {"$ref": "#/components/schemas/TrocaInput"}}
+          }
+        },
+        "responses": {
+          "200": {"description": "Troca registrada"}
+        }
+      }
+    },
+    "/informar-zumbificacao": {
+      "post": {
+        "summary": "Reportar sobrevivente infectado",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {"schema": {"$ref": "#/components/schemas/ZumbificacaoInput"}}
+          }
+        },
+        "responses": {
+          "200": {"description": "Aviso registrado"}
+        }
+      }
+    },
+    "/relatorio-geral": {
+      "get": {
+        "summary": "Relatorio geral",
+        "responses": {
+          "200": {"description": "Resumo com estatisticas"}
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SobreviventeInput": {
+        "type": "object",
+        "required": ["nome", "sexo", "idade", "latitude", "longitude"],
+        "properties": {
+          "nome": {"type": "string"},
+          "sexo": {"type": "string", "maxLength": 1},
+          "idade": {"type": "integer"},
+          "latitude": {"type": "number", "format": "double"},
+          "longitude": {"type": "number", "format": "double"},
+          "recursos": {
+            "type": "array",
+            "items": {"$ref": "#/components/schemas/Recurso"}
+          }
+        }
+      },
+      "Recurso": {
+        "type": "object",
+        "required": ["id", "quantidade"],
+        "properties": {
+          "id": {"type": "integer"},
+          "quantidade": {"type": "integer"}
+        }
+      },
+      "LocalizacaoInput": {
+        "type": "object",
+        "required": ["latitude", "longitude"],
+        "properties": {
+          "latitude": {"type": "number", "format": "double"},
+          "longitude": {"type": "number", "format": "double"}
+        }
+      },
+      "TrocaInput": {
+        "type": "object",
+        "required": ["sobrevivente_origem", "sobrevivente_destino", "itens_origem", "itens_destino"],
+        "properties": {
+          "sobrevivente_origem": {"type": "integer"},
+          "sobrevivente_destino": {"type": "integer"},
+          "itens_origem": {"type": "array", "items": {"$ref": "#/components/schemas/Recurso"}},
+          "itens_destino": {"type": "array", "items": {"$ref": "#/components/schemas/Recurso"}}
+        }
+      },
+      "ZumbificacaoInput": {
+        "type": "object",
+        "required": ["id_sobrevivente", "id_informante"],
+        "properties": {
+          "id_sobrevivente": {"type": "integer"},
+          "id_informante": {"type": "integer"}
+        }
+      }
+    }
+  }
+}

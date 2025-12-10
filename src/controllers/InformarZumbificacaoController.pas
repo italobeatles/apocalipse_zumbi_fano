@@ -17,6 +17,11 @@ implementation
 
 function TInformarZumbificacaoController.handleRequest(const request: IRequest; const response: IResponse): IResponse;
 begin
+  if HandlePreflight(request, response) then
+  begin
+    Result := response;
+    Exit;
+  end;
   if request.method = 'POST' then
     Result := JsonResponse(response, '{"message":"Aviso registrado"}', 200)
   else

@@ -19,6 +19,11 @@ function TSobreviventesController.handleRequest(const request: IRequest; const r
 var
   path: string;
 begin
+  if HandlePreflight(request, response) then
+  begin
+    Result := response;
+    Exit;
+  end;
   path := LowerCase(request.path);
   case request.method of
     'GET':

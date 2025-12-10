@@ -19,6 +19,11 @@ function TSwaggerController.handleRequest(const request: IRequest; const respons
 var
   SwaggerText: TStringList;
 begin
+  if HandlePreflight(request, response) then
+  begin
+    Result := response;
+    Exit;
+  end;
   SwaggerText := TStringList.Create;
   try
     if FileExists('swagger/openapi.json') then

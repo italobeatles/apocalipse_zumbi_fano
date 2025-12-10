@@ -19,6 +19,11 @@ function TInventarioController.handleRequest(const request: IRequest; const resp
 var
   path: string;
 begin
+  if HandlePreflight(request, response) then
+  begin
+    Result := response;
+    Exit;
+  end;
   path := LowerCase(request.path);
   if request.method = 'GET' then
   begin
